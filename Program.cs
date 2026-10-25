@@ -113,12 +113,7 @@ class Program
 						screen.deleteElement(steppedElement);
 
 						List<Element> currentElements = screen.getAllElements();
-						bool haveBoxElement = false;
-						currentElements.ForEach((element) =>
-						{
-							if (element.charRep == ElementTypes.BOX) haveBoxElement = true;
-						});
-						if (!haveBoxElement)
+						if (!currentElements.Any(element => element.charRep == ElementTypes.BOX))
 						{
 							break;
 						}
