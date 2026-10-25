@@ -5,11 +5,16 @@ class Level
 	public List<Element> boxes;
 	public List<Element> walls = new List<Element>();
 
-	public Level(Element _player, List<Element> _targets, List<Element> _boxes, List<Element>? _walls = null)
+	public int width = 20;
+	public int height = 10;
+
+	public Level(Element _player, List<Element> _targets, List<Element> _boxes, List<Element>? _walls = null, int _width = 20, int _height = 10)
 	{
 		player = _player;
 		targets = _targets;
 		boxes = _boxes;
 		if (_walls != null) walls = _walls;
+		width = _width;
+		height = _height;
 	}
 }

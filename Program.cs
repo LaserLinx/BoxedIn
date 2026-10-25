@@ -100,6 +100,7 @@ class Program
 	private static Element buildLevel(Screen screen, Level level)
 	{
 		screen.clearScreen();
+		screen.setDimensions(level.width,level.height);
 
 		Element player = level.player;
 

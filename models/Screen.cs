@@ -67,6 +67,12 @@ class Screen
 		elements.Clear();
 	}
 
+	public void setDimensions(int _width, int _height)
+	{
+		width = _width;
+		height = _height;
+	}
+
 	public List<Element> getAllElements()
 	{
 		return elements;

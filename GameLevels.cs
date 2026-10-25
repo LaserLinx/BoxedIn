@@ -17,7 +17,9 @@ class GameLevels
 			new Element(ElementTypes.WALL,18,3),
 			new Element(ElementTypes.WALL,18,6),
 			new Element(ElementTypes.WALL,18,7),
-			new Element(ElementTypes.WALL,18,8)]
+			new Element(ElementTypes.WALL,18,8)],
+			_width: 20,
+			_height: 10
 		));
 	}
 }

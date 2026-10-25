@@ -21,8 +21,9 @@ class Levels
 			new Element(levelInfo.player.charRep,levelInfo.player.x,levelInfo.player.y),
 			copy(levelInfo.targets),
 			copy(levelInfo.boxes),
-			copy(levelInfo.walls)
-
+			copy(levelInfo.walls),
+			levelInfo.width,
+			levelInfo.height
 		);
 		return level;
 	}
