@@ -65,10 +65,7 @@ class Program
 					int? selectedLevel = selectLevel();
 					currentLevel = selectedLevel ?? currentLevel;
 					if (selectedLevel != null) play();
-				} else
-				{
-					break;
-				}
+				} else break;
 			}
 		}
 	}
@@ -98,12 +95,6 @@ class Program
 
 		}
 		return null;
-	}
-	private static void update(Screen screen)
-	{
-		Console.Clear();
-		Console.WriteLine($"Level: {currentLevel+1}/{Levels.levels.Count}  Restart (R)");
-		Console.Write(screen.getString());
 	}
 
 	private static Element buildLevel(Screen screen, Level level)
@@ -137,7 +128,10 @@ class Program
 	{
 		while (true)
 		{
-			update(screen);
+			Console.Clear();
+			Console.WriteLine($"Level: {currentLevel+1}/{Levels.levels.Count}  Restart (R)");
+			Console.Write(screen.getString());
+			
 			ConsoleKeyInfo key = Console.ReadKey();
 
 			if (key.Key == ConsoleKey.Escape) return false;
@@ -184,12 +178,8 @@ class Program
 					} else if (elementSteppedElement?.charRep == ElementTypes.TARGET)
 					{
 						screen.deleteElement(steppedElement);
-
 						List<Element> currentElements = screen.getAllElements();
-						if (!currentElements.Any(element => element.charRep == ElementTypes.BOX))
-						{
-							return true;
-						}
+						if (!currentElements.Any(element => element.charRep == ElementTypes.BOX)) return true;
 					}
 
 					steppedElement.x = futureElementX;
