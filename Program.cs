@@ -20,7 +20,7 @@ class Program
 	private static void menu(Screen screen)
 	{
 		int selection = 0;
-		List<string> menuOptions = ["Play","Exit"];
+		List<string> menuOptions = ["Play","Select Level","Exit"];
 
 		while (true)
 		{
@@ -49,21 +49,32 @@ class Program
 			if (selection >= menuOptions.Count) selection = 0;
 			if (selection < 0 ) selection = menuOptions.Count-1;
 
+			void play()
+			{
+				Level level = Levels.getLevel(currentLevel);
+				Element player = buildLevel(screen,level);
+				bool finished = game(screen,player,level);
+				if (finished) currentLevel += 1;
+				if (currentLevel >= Levels.levels.Count)
+				{
+					currentLevel = 0;
+					Console.Clear();
+					Console.WriteLine("Congratulations you completed all levels.");
+					Console.ReadKey();
+				}
+			}
+
 			if (key.Key == ConsoleKey.Enter)
 			{
 				if (selection == 0)
 				{
-					Level level = Levels.getLevel(currentLevel);
-					Element player = buildLevel(screen,level);
-					bool finished = game(screen,player,level);
-					if (finished) currentLevel += 1;
-					if (currentLevel >= Levels.levels.Count)
-					{
-						currentLevel = 0;
-						Console.Clear();
-						Console.WriteLine("Congratulations you completed all levels.");
-						Console.ReadKey();
-					}
+					play();
+				} else if (selection == 1)
+				{
+					int? selectedLevel = selectLevel();
+					currentLevel = selectedLevel ?? currentLevel;
+					play();
+					
 				} else
 				{
 					break;
@@ -72,6 +83,37 @@ class Program
 		}
 	}
 
+
+	private static int? selectLevel()
+	{
+		int selectedLevel = 0;
+		while (true)
+		{
+			Console.Clear();
+			for (int i=0; i < Levels.levels.Count; i++)
+			{
+				if (selectedLevel == i)
+				{
+					Console.WriteLine($"* Level {i}");
+				} else
+				{
+					Console.WriteLine($"  Level {i}");
+				}
+			}
+			
+			ConsoleKeyInfo key = Console.ReadKey();
+			if (key.Key == ConsoleKey.Escape) break;
+
+			if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow) selectedLevel +=1;
+			if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow) selectedLevel -=1;
+			if (selectedLevel >= Levels.levels.Count) selectedLevel = 0;
+			if (selectedLevel < 0 ) selectedLevel = Levels.levels.Count-1;
+
+			if (key.Key == ConsoleKey.Enter) return selectedLevel;
+
+		}
+		return null;
+	}
 	private static void update(Screen screen)
 	{
 		Console.Clear();
