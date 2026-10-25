@@ -28,4 +28,13 @@ class Levels
 		return level;
 	}
 
+	public static void addLevel(int playerX, int playerY, (int x, int y)[] targets, (int x, int y)[] boxes, (int x, int y)[]? walls = null)
+		{
+			registerLevel(new Level(
+				new Element(ElementTypes.PLAYER, playerX, playerY),
+				targets.Select(position => new Element(ElementTypes.TARGET, position.x, position.y)).ToList(),
+				boxes.Select(position => new Element(ElementTypes.BOX, position.x, position.y)).ToList(),
+				walls?.Select(position => new Element(ElementTypes.WALL, position.x, position.y)).ToList()
+			));
+		}
 }
