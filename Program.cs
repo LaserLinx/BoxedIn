@@ -12,9 +12,56 @@ class Program
 
 		GameLevels.registerGameLevels();
 
-		Level level = Levels.getLevel(currentLevel);
-		Element player = buildLevel(screen,level);
+		while (true)
+		{
+			if (currentLevel >= Levels.levels.Count) break;
+			Level level = Levels.getLevel(currentLevel);
+			Element player = buildLevel(screen,level);
+			game(screen,player,level);
+			currentLevel += 1;
+		}
 
+		
+		Console.Clear();
+	}
+
+
+	private static void update(Screen screen)
+	{
+		Console.Clear();
+		Console.WriteLine($"Level: {currentLevel+1}/{Levels.levels.Count}  Restart (R)");
+		Console.Write(screen.getString());
+	}
+
+	private static Element buildLevel(Screen screen, Level level)
+	{
+		screen.clearScreen();
+
+		Element player = level.player;
+
+		screen.addElement(player);
+		
+		level.targets.ForEach(screen.addElement);
+		level.boxes.ForEach(screen.addElement);
+		level.walls.ForEach(screen.addElement);
+
+		for (int y=0; y<=screen.height; y++)
+		{
+			for (int x=0; x<=screen.width; x++)
+			{
+				if (y == 0 || y == screen.height || x == 0 || x == screen.width)
+				{
+					Element wall = new Element(ElementTypes.WALL,x,y);
+					screen.addElement(wall);
+				}
+			}
+		}
+
+		return player;
+	}
+
+	public static void game(Screen screen, Element player, Level level)
+	{
 		while (true)
 		{
 			update(screen);
@@ -73,11 +120,7 @@ class Program
 						});
 						if (!haveBoxElement)
 						{
-							currentLevel += 1;
-							if (currentLevel >= Levels.levels.Count) break;
-							level = Levels.getLevel(currentLevel);
-							player = buildLevel(screen,level);
-
+							break;
 						}
 					}
 
@@ -90,40 +133,5 @@ class Program
 			player.x = futureX;
 			player.y = futureY;
 		}
-		Console.Clear();
-	}
-
-	private static void update(Screen screen)
-	{
-		Console.Clear();
-		Console.WriteLine($"Level: {currentLevel+1}/{Levels.levels.Count}  Restart (R)");
-		Console.Write(screen.getString());
-	}
-
-	private static Element buildLevel(Screen screen, Level level)
-	{
-		screen.clearScreen();
-
-		Element player = level.player;
-
-		screen.addElement(player);
-		
-		level.targets.ForEach(screen.addElement);
-		level.boxes.ForEach(screen.addElement);
-		level.walls.ForEach(screen.addElement);
-
-		for (int y=0; y<=screen.height; y++)
-		{
-			for (int x=0; x<=screen.width; x++)
-			{
-				if (y == 0 || y == screen.height || x == 0 || x == screen.width)
-				{
-					Element wall = new Element(ElementTypes.WALL,x,y);
-					screen.addElement(wall);
-				}
-			}
-		}
-
-		return player;
 	}
 }
