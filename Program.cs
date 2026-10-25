@@ -12,19 +12,65 @@ class Program
 
 		GameLevels.registerGameLevels();
 
-		while (true)
-		{
-			if (currentLevel >= Levels.levels.Count) break;
-			Level level = Levels.getLevel(currentLevel);
-			Element player = buildLevel(screen,level);
-			game(screen,player,level);
-			currentLevel += 1;
-		}
-
+		menu(screen);
 		
 		Console.Clear();
 	}
 
+	private static void menu(Screen screen)
+	{
+		int selection = 0;
+		List<string> menuOptions = ["Play","Exit"];
+
+		while (true)
+		{
+			Console.Clear();
+			if (currentLevel == 0)
+			{
+				menuOptions[0] = "Play";
+			} else
+			{
+				menuOptions[0] = "Continue";
+			}
+			for (int i=0; i < menuOptions.Count; i++)
+			{
+				if (selection == i)
+				{
+					Console.WriteLine($"* {menuOptions[i]}");
+				} else
+				{
+					Console.WriteLine($"  {menuOptions[i]}");
+				}
+			}
+			ConsoleKeyInfo key = Console.ReadKey();
+			if (key.Key == ConsoleKey.Escape) break;
+			if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow) selection +=1;
+			if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow) selection -=1;
+			if (selection >= menuOptions.Count) selection = 0;
+			if (selection < 0 ) selection = menuOptions.Count-1;
+
+			if (key.Key == ConsoleKey.Enter)
+			{
+				if (selection == 0)
+				{
+					Level level = Levels.getLevel(currentLevel);
+					Element player = buildLevel(screen,level);
+					bool finished = game(screen,player,level);
+					if (finished) currentLevel += 1;
+					if (currentLevel >= Levels.levels.Count)
+					{
+						currentLevel = 0;
+						Console.Clear();
+						Console.WriteLine("Congratulations you completed all levels.");
+						Console.ReadKey();
+					}
+				} else
+				{
+					break;
+				}
+			}
+		}
+	}
 
 	private static void update(Screen screen)
 	{
@@ -60,14 +106,14 @@ class Program
 		return player;
 	}
 
-	public static void game(Screen screen, Element player, Level level)
+	public static bool game(Screen screen, Element player, Level level)
 	{
 		while (true)
 		{
 			update(screen);
 			ConsoleKeyInfo key = Console.ReadKey();
 
-			if (key.Key == ConsoleKey.Escape) break;
+			if (key.Key == ConsoleKey.Escape) return false;
 
 			if (key.Key == ConsoleKey.R)
 			{
@@ -115,7 +161,7 @@ class Program
 						List<Element> currentElements = screen.getAllElements();
 						if (!currentElements.Any(element => element.charRep == ElementTypes.BOX))
 						{
-							break;
+							return true;
 						}
 					}
 
