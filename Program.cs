@@ -79,8 +79,8 @@ class Program
 			Console.Clear();
 			for (int i=0; i < Levels.levels.Count; i++)
 			{
-				if (selectedLevel == i) Console.WriteLine($" > Level {i}");
-				else Console.WriteLine($"  Level {i}");
+				if (selectedLevel == i) Console.WriteLine($" > Level {i+1}");
+				else Console.WriteLine($"  Level {i+1}");
 			}
 			
 			ConsoleKeyInfo key = Console.ReadKey();
