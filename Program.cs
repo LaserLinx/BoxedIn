@@ -125,10 +125,10 @@ class Program
 			int futureX = player.x;
 			int futureY = player.y;
 
-			if (key.Key == ConsoleKey.D) futureX += 1;
-			if (key.Key == ConsoleKey.A) futureX -= 1;
-			if (key.Key == ConsoleKey.W) futureY -= 1;
-			if (key.Key == ConsoleKey.S) futureY += 1;
+			if (key.Key == ConsoleKey.D || key.Key == ConsoleKey.RightArrow) futureX += 1;
+			if (key.Key == ConsoleKey.A || key.Key == ConsoleKey.LeftArrow) futureX -= 1;
+			if (key.Key == ConsoleKey.W || key.Key == ConsoleKey.UpArrow) futureY -= 1;
+			if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow) futureY += 1;
 
 
 			Element? steppedElement = screen.getElement(futureX,futureY);
