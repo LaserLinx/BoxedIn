@@ -8,7 +8,7 @@ class Program
 	{
 		
 
-		Screen screen = new Screen(20,10);
+		Screen screen = new Screen(20,10,ElementTypes.BACKGROUND);
 
 		GameLevels.registerGameLevels();
 

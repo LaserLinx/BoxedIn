@@ -7,11 +7,14 @@ class Screen
 	public int width;
 	public int height;
 
+	public string background;
 
-	public Screen(int _width, int _height)
+
+	public Screen(int _width, int _height, string _background = " ")
 	{
 		width = _width;
 		height = _height;
+		background = _background;
 
 	}
 
@@ -35,7 +38,7 @@ class Screen
 				});
 				if (selectedElement == null)
 				{
-					screenRow += " ";
+					screenRow += background;
 				} else
 				{
 					screenRow += selectedElement.charRep;
