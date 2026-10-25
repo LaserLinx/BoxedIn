@@ -25,23 +25,14 @@ class Program
 		while (true)
 		{
 			Console.Clear();
-			if (currentLevel == 0)
-			{
-				menuOptions[0] = "Play";
-			} else
-			{
-				menuOptions[0] = "Continue";
-			}
+			if (currentLevel == 0) menuOptions[0] = "Play";
+			else menuOptions[0] = "Continue";
 			for (int i=0; i < menuOptions.Count; i++)
 			{
-				if (selection == i)
-				{
-					Console.WriteLine($"* {menuOptions[i]}");
-				} else
-				{
-					Console.WriteLine($"  {menuOptions[i]}");
-				}
+				if (selection == i) Console.WriteLine($" > {menuOptions[i]}");
+				else Console.WriteLine($"  {menuOptions[i]}");
 			}
+
 			ConsoleKeyInfo key = Console.ReadKey();
 			if (key.Key == ConsoleKey.Escape) break;
 			if (key.Key == ConsoleKey.S || key.Key == ConsoleKey.DownArrow) selection +=1;
@@ -73,8 +64,7 @@ class Program
 				{
 					int? selectedLevel = selectLevel();
 					currentLevel = selectedLevel ?? currentLevel;
-					play();
-					
+					if (selectedLevel != null) play();
 				} else
 				{
 					break;
@@ -92,13 +82,8 @@ class Program
 			Console.Clear();
 			for (int i=0; i < Levels.levels.Count; i++)
 			{
-				if (selectedLevel == i)
-				{
-					Console.WriteLine($"* Level {i}");
-				} else
-				{
-					Console.WriteLine($"  Level {i}");
-				}
+				if (selectedLevel == i) Console.WriteLine($" > Level {i}");
+				else Console.WriteLine($"  Level {i}");
 			}
 			
 			ConsoleKeyInfo key = Console.ReadKey();
