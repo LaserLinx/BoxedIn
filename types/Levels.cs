@@ -10,27 +10,18 @@ class Levels
 	public static Level getLevel(int index)
 	{
 		Level levelInfo = levels[index];
-		Element playerInfo = new Element(ElementTypes.PLAYER,levelInfo.player.x,levelInfo.player.y);
-		List<Element> targetsInfo = new List<Element>();
-		levelInfo.targets.ForEach((element) =>
+		List<Element> copy(List<Element> elements)
 		{
-			targetsInfo.Add(new Element(ElementTypes.TARGET,element.x,element.y));
-		});
-		List<Element> boxesInfo = new List<Element>();
-		levelInfo.boxes.ForEach((element) =>
-		{
-			boxesInfo.Add(new Element(ElementTypes.BOX,element.x,element.y));
-		});
-		List<Element> wallsInfo = new List<Element>();
-		levelInfo.walls.ForEach((element) =>
-		{
-			wallsInfo.Add(new Element(ElementTypes.WALL,element.x,element.y));
-		});
+			return elements
+			.Select(element => new Element(element.charRep,element.x,element.y))
+			.ToList();
+		}
+		
 		Level level = new Level(
-			playerInfo,
-			targetsInfo,
-			boxesInfo,
-			wallsInfo
+			new Element(levelInfo.player.charRep,levelInfo.player.x,levelInfo.player.y),
+			copy(levelInfo.targets),
+			copy(levelInfo.boxes),
+			copy(levelInfo.walls)
 
 		);
 		return level;
