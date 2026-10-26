@@ -92,6 +92,7 @@ class Game
 		screen.addElement(player);
 		
 		level.targets.ForEach(screen.addElement);
+		level.lavas.ForEach(screen.addElement);
 		level.boxes.ForEach(screen.addElement);
 		level.walls.ForEach(screen.addElement);
 
@@ -112,8 +113,14 @@ class Game
 
 	public static bool game(Screen screen, Element player, Level level)
 	{
+		void reset()
+		{
+			level = Levels.getLevel(currentLevel);
+			player = buildLevel(screen,level);
+		}
 		while (true)
 		{
+			
 			Console.Clear();
 			Console.WriteLine($"Level: {currentLevel+1}/{Levels.levels.Count}  Restart (R)");
 			Console.Write(screen.getString());
@@ -124,8 +131,7 @@ class Game
 
 			if (key.Key == ConsoleKey.R)
 			{
-				level = Levels.getLevel(currentLevel);
-				player = buildLevel(screen,level);
+				reset();
 				continue;
 			}
 
@@ -146,6 +152,12 @@ class Game
 					futureX = player.x;
 					futureY = player.y;
 				}
+
+				if (steppedElement.charRep == ElementTypes.LAVA)
+				{
+					reset();
+					continue;
+				}
 				
 				if (steppedElement.charRep == ElementTypes.BOX)
 				{
@@ -155,6 +167,13 @@ class Game
 					futureElementX += futureX - player.x;
 					futureElementY += futureY - player.y;
 					Element? elementSteppedElement = screen.getElement(futureElementX,futureElementY);
+
+					if (elementSteppedElement != null && elementSteppedElement.charRep == ElementTypes.LAVA)
+					{
+						reset();
+						continue;
+					}
+
 					if (elementSteppedElement != null && elementSteppedElement.charRep != ElementTypes.TARGET)
 					{
 						futureElementX = steppedElement.x;

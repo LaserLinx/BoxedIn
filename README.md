@@ -50,6 +50,7 @@ The board uses these symbols:
 | `■` | Box |
 | `⬚` | Target |
 | `░` | Wall |
+| `♰` | Lava; touching it with the player or a box resets the level |
 
 ## Run with Docker
 

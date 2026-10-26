@@ -3,7 +3,7 @@ class GameLevels
 	public static void registerGameLevels()
 	{
 
-		Levels.addLevel(2, 8, [(8, 2)], [(3, 2)]);
+		Levels.addLevel(2, 8, [(8, 2)], [(3, 2)],lavas: [(5,5)]);
 		Levels.addLevel(2, 8, [(4, 6)], [(4, 2)]);
 		Levels.addLevel(2, 8, [(11, 4)], [(3, 4)], [(7, 2), (7, 3), (7, 5), (7, 6)]);
 		Levels.addLevel(2, 8, [(9, 2), (9, 6)], [(3, 2), (3, 6)]);
